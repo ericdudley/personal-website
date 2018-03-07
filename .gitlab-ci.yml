@@ -20,7 +20,7 @@ build-dist:
     - docker push registry.gitlab.com/ericdudley/personal-website
   cache:
     paths:
-    - node_modules/
+      untracked: true
 
 deploy-image:
   stage: deploy
