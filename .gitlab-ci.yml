@@ -1,0 +1,15 @@
+image: node:alpine
+
+stages:
+  - build
+  - deploy
+
+build-dist:
+  stage: build
+  script:
+    - echo Building...
+
+deploy-dist:
+  stage: build
+  script:
+    - echo Deploy...
