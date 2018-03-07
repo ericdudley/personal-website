@@ -1,0 +1,69 @@
+#performer
+{
+    text-align: center;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+#performer 
+{
+    video
+    {
+        width: 100%;
+    }
+
+    #vcanvas1, .slider-picker, .visualizer, .green-screen
+    {
+        display: none;
+    }
+
+    .slider-picker, .visualizer, #vcanvas1
+    {
+        width: 100%;
+    }
+} 
+
+@media screen and(min-width: 768px){
+    #performer 
+    {
+        .slider-picker, .visualizer, #vcanvas1, .green-screen
+        {
+            width: 480px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .green-screen
+        {
+            height: 10px;
+            background-color: #81ff00;
+            margin-top: 20px;
+        }
+
+        .green-screen:hover
+        {
+            cursor: pointer;
+        }
+
+        .no-mobile, video
+        {
+            display: none;
+        }
+        
+        $tiger-width: 30vw;
+        @keyframes tiger{
+            0%{transform: translateX(-$tiger-width) rotateY(180deg);}
+            40%{transform: translateX($tiger-width*0.8) rotateY(180deg);}
+            50%{transform: translateX($tiger-width) rotateY(0deg);}
+            90%{transform: translateX(-$tiger-width*0.8) rotateY(0deg);}
+            100%{transform: translateX(-$tiger-width) rotateY(180deg);}
+        }
+
+        #vcanvas1
+        {
+            animation: tiger 4.2s infinite;
+            animation-timing-function: linear;
+        }
+    } 
+
+}

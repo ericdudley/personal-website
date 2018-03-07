@@ -1,0 +1,143 @@
+$img-width: 308px * 0.8;
+$img-height: 204px * 0.8;
+
+#gallery
+{
+  z-index: 0;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+#gallery #heading
+{
+  margin: 0 auto;
+  display: inline-block;
+  width: 90%;
+}
+
+#gallery #heading p
+{
+  color: white;
+  text-align: left;
+}
+
+#gallery section
+{
+  margin: 40px auto;
+}
+
+#gallery img
+{
+    width: 100%;
+    height: auto;
+}
+
+#gallery .back-link
+{
+  margin-right: 10px;
+}
+
+@media screen and(min-width: 768px){
+  #gallery #heading
+  {
+    width: 616px;
+  }  
+
+  #gallery img
+  {
+      width: $img-width;
+      height: $img-height;
+      float: left;
+      transition: transform 0.5s;
+      z-index: 2;
+      opacity: 0;
+      animation-name: fadeIn;
+      animation-delay: 0.8s;
+      animation-fill-mode: forwards;
+  }
+
+  #gallery img:hover
+  {
+      transform: scale(1.1);      
+      z-index: 3;
+  }
+
+  #gallery img.selected
+  {
+      transform: scale(3);
+      z-index: 3;
+  }
+
+  .gimg1
+  {
+    transform-origin: left top;
+    animation-duration: 0.4s;    
+  }
+
+  .gimg2
+  {
+    transform-origin: center top;
+    animation-duration: 0.8s;    
+  }
+
+  .gimg3
+  {
+    transform-origin: right top;
+    animation-duration: 1.2s;    
+  }
+
+  .gimg4
+  {
+    transform-origin: left center;
+    animation-duration: 3.2s;    
+  }
+
+  .gimg5
+  {
+    transform-origin: center center;
+    animation-duration: 3.6s;    
+  }
+
+  .gimg6
+  {
+    transform-origin: right center;
+    animation-duration: 1.6s;    
+  }
+
+  .gimg7
+  {
+    transform-origin: left bottom;
+    animation-duration: 2.8s;    
+  }
+
+  .gimg8
+  {
+    transform-origin: center bottom;
+    animation-duration: 2.4s;    
+  }
+
+  .gimg9
+  {
+    transform-origin: right bottom;
+    animation-duration: 2s;    
+  }
+
+  #gallery #images
+  {
+    width: $img-width * 3;
+    display: grid;
+    grid-template-columns: repeat(3, $img-width);
+    grid-template-rows: repeat(3, $img-height);
+    border: #16ffff solid 2px;
+  }
+
+  #gallery #bottom-buttons
+  {
+      margin: 0 auto;
+      margin-bottom: 40px;
+  }
+}

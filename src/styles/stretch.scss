@@ -1,0 +1,227 @@
+body{
+    overflow: auto;
+}
+#stretch{
+    $width: 768px;
+    text-align: center;
+    position: relative;
+
+    h1{
+        color: #14ffff;
+    }
+
+    .progressbar-wrapper{
+        grid-area: progressbar;
+        width: 100%;
+        height: 100px;
+        position: relative;
+        margin-bottom: 80px;
+
+        div{
+            transition: 1s width;
+            transition-timing-function: linear;
+            height: 80px;
+            background-color: #14ffff;
+            position: relative;
+            border-radius: 80px;
+
+            .progressbar-time{
+                color: rgb(255, 102, 0);
+                font-size: 80px;
+                position: absolute;
+                right: 40px;
+                top: 40px;
+                transform: translateY(-50%);
+            }
+        }
+    }
+
+    .status-wrapper{
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .btn{
+        margin: 10px 5px;
+    }
+
+    .status-wrapper p{
+        border-radius: 100px;
+        display: inline-block;
+        width: 50%;
+        height: 80px;
+        font-size: 2em;
+        position: relative;
+
+        >span{
+            font-size: 100px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            top: -110px;
+            color: #fff700;
+        }
+    }
+
+    .control-buttons-wrapper{
+        width: 100%;
+        height: 50px;
+    }
+
+    .control-num-selectors-wrapper{
+        margin-top: 30px;
+    }
+
+    .num-selector-wrapper
+    {
+        width: 150px;
+        height: 120px;
+        margin: 0 auto;
+        position: relative;
+
+        // Title
+        >span{
+            position: absolute;
+            width: 100%;
+            left: 0;
+            top: -30px;
+            transform: translateX(2px);
+        }
+
+    }
+
+    .youtube-search-wrapper{
+        padding: 20px;
+        margin-bottom: 80px;
+        position: relative;
+
+        .search-wrapper{
+            width: 200px;
+            vertical-align: middle;
+            margin: 0 auto;
+            white-space: nowrap;
+            position: relative;
+            transform: translateX(-5px);
+
+            input{
+                width: 200px;
+                height: 40px;
+                background: #000000;
+                border: solid 2px #14ffff;
+                font-size: 10pt;
+                padding-left: 10px;
+                float: left;
+                color: #262626;
+                border-radius: 5px;
+                color: #fff;
+                transition: width .55s ease;
+            }
+
+            .icon{
+                position: absolute;
+                top: 0;
+                font-size: 35px;
+                right: -65px;
+                height: 50px;
+                width: 50px;
+                z-index: 1;
+                color: #14ffff;
+                transition: transform .55s ease;
+            }
+
+            .icon:hover{
+               transform: scale(1.2);
+               cursor: pointer;  
+            }
+
+            button{
+            }
+        }
+    }
+
+    .total-time-wrapper{
+        .total-time-title{
+            font-size: 0.8em;
+        }
+
+        .total-time-number{
+            font-size: 1.8em;
+            color: #fff700;
+        }
+    }
+
+    @media screen and(min-width: 768px){        
+        width: $width;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: 1fr 2fr 1fr;
+        grid-template-rows: 80px 160px 180px 100px 80px 120px 60px 60px;
+        grid-template-areas: 
+        ". title ."
+        "progressbar progressbar progressbar"
+        ". status ."
+        ". control-buttons ."
+        ". youtube-search ."
+        ". control-num-selectors ."
+        ". total-time ."
+        ". back .";
+
+        h1{
+            grid-area: title;
+        }
+
+        .progressbar-wrapper{
+            grid-area: progressbar;
+            height: 100%;
+        }
+
+        .status-wrapper{
+            grid-area: status;
+        }
+
+        .control-buttons-wrapper{
+            grid-area: control-buttons;
+
+            a{
+                position: relative;
+                top: 60px;
+            }
+        }
+
+        .control-num-selectors-wrapper{
+            grid-area: control-num-selectors;
+            display: flex;
+        }
+
+        .youtube-search-wrapper{
+            grid-area: youtube-search;
+            margin-bottom: 0px;
+        }
+
+        .total-time-wrapper{
+            grid-area: total-time;
+        }
+
+        .back-link{
+            grid-area: back;
+        }
+
+        .num-selector-wrapper
+        {
+            width: 150px;
+            height: 90px;
+            margin-top: 15px;
+            position: relative;
+
+            // Title
+            >span{
+                position: absolute;
+                width: 100%;
+                left: 0;
+                top: -30px;
+                transform: translateX(2px);
+            }
+
+        }
+    }
+}

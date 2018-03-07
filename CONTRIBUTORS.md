@@ -1,0 +1,1 @@
+* Eric Dudley (http://ericdudley.com)

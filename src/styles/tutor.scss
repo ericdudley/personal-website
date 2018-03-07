@@ -1,0 +1,47 @@
+#tutor
+{
+    text-align: center;
+    height: 100%;
+    overflow-y: scroll;
+}
+
+iframe 
+{
+    width: 100%;
+    height: 100%;
+    border: none;
+    padding: 0;
+}
+
+iframe p
+{
+    font-size: 200px;
+    color: black;
+}
+
+#form-wrapper
+{
+    width: 100%;
+    height: 500px;
+    margin: 0px;
+    margin-bottom: 20px;
+    background-image: url("../images/loading.gif");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 100px;
+}
+
+#tutor .link
+{
+    display: inline-block;
+    margin-bottom: 30px;
+    animation: fadeUp 1s;    
+}
+
+@media screen and(min-width: 768px){
+    #form-wrapper
+    {
+        width: 650px;
+        margin: 0 auto;
+    }
+}
