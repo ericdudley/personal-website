@@ -1,4 +1,4 @@
-image: beevelop/nodejs-python:latest
+image: ericdudley/ci:latest
 
 stages:
   - build
