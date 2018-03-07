@@ -2,9 +2,6 @@ stages:
   - build
 
 build-dist:
-  image: ericdudley/ci:latest
-  services:
-    - docker:dind
   stage: build
   script:
     - echo "Getting dependencies..."
