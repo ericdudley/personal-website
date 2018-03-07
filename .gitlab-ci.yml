@@ -15,19 +15,29 @@ build-dist:
     - echo "Adding ci stamp..."
     - echo "<!-- Built and deployed with GitLab CI. Build $CI_JOB_ID for project $CI_PROJECT_NAME. Git url $CI_REPOSITORY_URL Commit $CI_COMMIT_SHA -->$(cat dist/index.html)" > dist/index.html
     - echo "Building docker image..."
-    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.gitlab.com
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
     - docker build -t registry.gitlab.com/ericdudley/personal-website .
-    - docker push registry.gitlab.com/ericdudley/personal-website
+    - docker push registry.gitlab.com/ericdudley/personal-website:$CI_PIPELINE_ID
   cache:
     paths:
       untracked: true
 
-deploy-image:
+deploy-image-prod:
   stage: deploy
   script:
     - echo "Stopping image..."
     - docker kill personal-website || true;docker rm personal-website || true
     - echo "Running image..."
-    - docker run --name personal-website -p 80:80 -d registry.gitlab.com/ericdudley/personal-website
+    - docker run --name personal-website -p 80:80 -d registry.gitlab.com/ericdudley/personal-website:$CI_PIPELINE_ID
   only: 
+    - master
+
+deploy-image-staging:
+  stage: deploy
+  script:
+    - echo "Stopping image..."
+    - docker kill personal-website-staging || true;docker rm personal-website-staging || true
+    - echo "Running image..."
+    - docker run --name personal-website-staging -p 80:80 -d registry.gitlab.com/ericdudley/personal-website:$CI_PIPELINE_ID
+  except: 
     - master
