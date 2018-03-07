@@ -20,4 +20,5 @@ build-dist:
     - docker build -t registry.gitlab.com/ericdudley/personal-website .
     - docker push registry.gitlab.com/ericdudley/personal-website
   cache:
-    untracked: true
+    paths:
+    - node_modules/
