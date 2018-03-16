@@ -28,6 +28,9 @@ deploy-image-prod:
     - docker kill personal-website || true;docker rm personal-website || true
     - echo "Running image..."
     - docker run --name personal-website -p 80:80 -d registry.gitlab.com/ericdudley/personal-website:$CI_PIPELINE_ID
+  environment:
+    name: production
+    url: http://ericdudley.com
   only: 
     - master
 
@@ -37,6 +40,9 @@ deploy-image-staging:
     - echo "Stopping image..."
     - docker kill personal-website-staging || true;docker rm personal-website-staging || true
     - echo "Running image..."
-    - docker run --name personal-website-staging -p 80:80 -d registry.gitlab.com/ericdudley/personal-website:$CI_PIPELINE_ID
+    - docker run --name personal-website-staging -p 8181:80 -d registry.gitlab.com/ericdudley/personal-website:$CI_PIPELINE_ID
+  environment:
+    name: staging
+    url: http://ericdudley.com:8181
   except: 
     - master
