@@ -15,7 +15,7 @@ class Home extends React.Component {
                 </div>
                     <h1>eric dudley</h1>
                     <ul>
-                        <li className="home-icon"><a href="https://github.com/ericdudley" target="_blank"><i className="fa fa-5x fa-github" /></a></li>
+                        <li className="home-icon"><a href="https://gitlab.com/ericdudley/personal-website" target="_blank"><i className="fa fa-5x fa-gitlab" /></a></li>
                         <li className="home-icon"><a href="https://instagram.com/ericdudleyphotography" target="_blank"><i className="fa fa-5x fa-instagram" /></a></li>
                     </ul>
                     <ul>
