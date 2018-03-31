@@ -43,5 +43,8 @@ deploy-image-staging:
   environment:
     name: staging
     url: http://ericdudley.gitlab.io/personal-website/
+  artifacts:
+    paths:
+      - public
   except: 
     - master
