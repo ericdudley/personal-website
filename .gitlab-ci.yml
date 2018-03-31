@@ -21,10 +21,11 @@ build-dist:
   cache:
     untracked: true
 
-deploy-image-prod:
+deploy-prod:
   stage: deploy
-  image: mesosphere/aws-cli
+  image: python
   script:
+    - pip install awscli
     - aws s3 rm s3://www.ericdudley.com --recursive
     - aws s3 sync ./dist s3://www.ericdudley.com/
   environment:
@@ -33,10 +34,11 @@ deploy-image-prod:
   only: 
     - master
 
-pages:
+deploy-staging:
   stage: deploy
-  image: mesosphere/aws-cli
+  image: python
   script:
+    - pip install awscli  
     - aws s3 rm s3://dev.ericdudley.com --recursive
     - aws s3 sync ./dist s3://dev.ericdudley.com/
   environment:
