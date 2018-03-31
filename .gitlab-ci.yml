@@ -39,8 +39,7 @@ deploy-image-staging:
   stage: deploy
   image: alpine
   script:
-    - mkdir -p ./public
-    - rsync -r ./dist ./public
+    - cp -r ./dist ./public
   environment:
     name: staging
     url: http://ericdudley.gitlab.io/personal-website/
