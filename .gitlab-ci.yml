@@ -2,8 +2,12 @@ stages:
   - build
   - deploy
 
+variables:
+  S3_BUCKET_NAME: "www.ericdudley.com"
+
 build-dist:
   stage: build
+  image: node
   script:
     - echo "Getting dependencies..."
     - npm install
@@ -14,35 +18,33 @@ build-dist:
     - mv sitemap-0.xml dist
     - echo "Adding ci stamp..."
     - echo "<!-- Built and deployed with GitLab CI. Build $CI_JOB_ID for project $CI_PROJECT_NAME. Git url $CI_REPOSITORY_URL Commit $CI_COMMIT_SHA -->$(cat dist/index.html)" > dist/index.html
-    - echo "Building docker image..."
-    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
-    - docker build -t registry.gitlab.com/ericdudley/personal-website:$CI_PIPELINE_ID . 
-    - docker push registry.gitlab.com/ericdudley/personal-website:$CI_PIPELINE_ID
+  artifacts:
+    paths:
+      - "dist"
   cache:
     untracked: true
 
 deploy-image-prod:
   stage: deploy
+  image: mesosphere/aws-cli
   script:
-    - echo "Stopping image..."
-    - docker kill personal-website || true;docker rm personal-website || true
-    - echo "Running image..."
-    - docker run --name personal-website -p 80:80 -d registry.gitlab.com/ericdudley/personal-website:$CI_PIPELINE_ID
+    - aws s3 cp ./dist s3://$S3_BUCKET_NAME/ --recursive --include "*"
   environment:
     name: production
-    url: http://ericdudley.com
+    url: http://www.ericdudley.com
   only: 
     - master
 
-deploy-image-staging:
+pages:
   stage: deploy
+  image: alpine
   script:
-    - echo "Stopping image..."
-    - docker kill personal-website-staging || true;docker rm personal-website-staging || true
-    - echo "Running image..."
-    - docker run --name personal-website-staging -p 8181:80 -d registry.gitlab.com/ericdudley/personal-website:$CI_PIPELINE_ID
+    - cp -r ./dist ./public
   environment:
     name: staging
-    url: http://ericdudley.com:8181
+    url: http://ericdudley.gitlab.io/personal-website/
+  artifacts:
+    paths:
+      - public
   except: 
     - master
