@@ -2,9 +2,6 @@ stages:
   - build
   - deploy
 
-variables:
-  S3_BUCKET_NAME: "www.ericdudley.com"
-
 build-dist:
   stage: build
   image: node
@@ -28,7 +25,8 @@ deploy-image-prod:
   stage: deploy
   image: mesosphere/aws-cli
   script:
-    - aws s3 cp ./dist s3://$S3_BUCKET_NAME/ --recursive --include "*"
+    - aws s3 rm s3://www.ericdudley.com --recursive
+    - aws s3 sync ./dist s3://www.ericdudley.com/
   environment:
     name: production
     url: http://www.ericdudley.com
@@ -37,14 +35,12 @@ deploy-image-prod:
 
 pages:
   stage: deploy
-  image: alpine
+  image: mesosphere/aws-cli
   script:
-    - cp -r ./dist ./public
+    - aws s3 rm s3://dev.ericdudley.com --recursive
+    - aws s3 sync ./dist s3://dev.ericdudley.com/
   environment:
     name: staging
     url: http://ericdudley.gitlab.io/personal-website/
-  artifacts:
-    paths:
-      - public
   except: 
     - master
