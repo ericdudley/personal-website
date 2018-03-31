@@ -37,7 +37,7 @@ class Gallery extends React.Component {
             <Navigation />
             <section id="heading">
                 <a className="link" href="mailto:ericdudley@email.com" target="_blank">Contact Me</a>
-                <p>Looking for a photographer? I am an amateur photographer looking to get some experience in shooting events, nature, and portraits. Contact me if you want your event shot or are looking for some portraits.</p>
+                <p>Looking for a photographer? I am an amateur photographer looking to get some experience in shooting events, nature, and portraits. Contact me if you want your event shot or are looking for portraits.</p>
                 <a href="https://www.flickr.com/photos/ericdudley" className="link" target="_blank">see more at flickr <i className="fa fa-flickr" /></a>
             </section>
             <section id="images">
