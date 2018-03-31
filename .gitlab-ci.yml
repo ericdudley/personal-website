@@ -7,6 +7,7 @@ variables:
 
 build-dist:
   stage: build
+  image: node
   script:
     - echo "Getting dependencies..."
     - npm install
@@ -24,8 +25,8 @@ build-dist:
     untracked: true
 
 deploy-image-prod:
-  image: mesosphere/aws-cli
   stage: deploy
+  image: mesosphere/aws-cli
   script:
     - aws s3 cp ./dist s3://$S3_BUCKET_NAME/ --recursive --include "*"
   environment:
@@ -35,8 +36,8 @@ deploy-image-prod:
     - master
 
 deploy-image-staging:
-  image: alpine:latest
   stage: deploy
+  image: alpine:latest
   script:
     - mkdir -p ./public
     - rsync -r ./dist ./public
