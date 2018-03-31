@@ -7,8 +7,6 @@ variables:
 
 build-dist:
   stage: build
-  tags:
-    - docker
   image: node
   script:
     - echo "Getting dependencies..."
@@ -28,8 +26,6 @@ build-dist:
 
 deploy-image-prod:
   stage: deploy
-  tags:
-    - docker
   image: mesosphere/aws-cli
   script:
     - aws s3 cp ./dist s3://$S3_BUCKET_NAME/ --recursive --include "*"
@@ -42,8 +38,6 @@ deploy-image-prod:
 deploy-image-staging:
   stage: deploy
   image: alpine
-  tags:
-    - docker
   script:
     - mkdir -p ./public
     - rsync -r ./dist ./public
