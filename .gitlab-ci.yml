@@ -2,9 +2,6 @@ stages:
   - build
   - deploy
 
-variables:
-  S3_BUCKET_NAME: "www.ericdudley.com"
-
 build-dist:
   stage: build
   image: node
@@ -24,27 +21,28 @@ build-dist:
   cache:
     untracked: true
 
-deploy-image-prod:
+deploy-prod:
   stage: deploy
-  image: mesosphere/aws-cli
+  image: python
   script:
-    - aws s3 cp ./dist s3://$S3_BUCKET_NAME/ --recursive --include "*"
+    - pip install awscli
+    - aws s3 rm s3://www.ericdudley.com --recursive
+    - aws s3 sync ./dist s3://www.ericdudley.com/
   environment:
     name: production
     url: http://www.ericdudley.com
   only: 
     - master
 
-pages:
+deploy-staging:
   stage: deploy
-  image: alpine
+  image: python
   script:
-    - cp -r ./dist ./public
+    - pip install awscli  
+    - aws s3 rm s3://dev.ericdudley.com --recursive
+    - aws s3 sync ./dist s3://dev.ericdudley.com/
   environment:
     name: staging
     url: http://ericdudley.gitlab.io/personal-website/
-  artifacts:
-    paths:
-      - public
   except: 
     - master

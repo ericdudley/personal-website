@@ -4,15 +4,15 @@ import GalleryImage from "./GalleryImage";
 import Navigation from "./Navigation";
 import "../styles/gallery.scss";
 import "../images/1.jpg";
-import  "../images/2.jpg";
-import  "../images/3.jpg";
-import  "../images/4.jpg";
-import  "../images/5.jpg";
-import  "../images/6.jpg";
-import  "../images/7.jpg";
-import  "../images/8.jpg";
-import  "../images/9.jpg";
-class Gallery extends React.Component{
+import "../images/2.jpg";
+import "../images/3.jpg";
+import "../images/4.jpg";
+import "../images/5.jpg";
+import "../images/6.jpg";
+import "../images/7.jpg";
+import "../images/8.jpg";
+import "../images/9.jpg";
+class Gallery extends React.Component {
 
     constructor(props) {
         super(props);
@@ -26,26 +26,26 @@ class Gallery extends React.Component{
         this.setState({ active: !currentState });
     }
 
-    render(){
+    render() {
         let imgs = [];
-        for(let i=1; i<=9; i++){
+        for (let i = 1; i <= 9; i++) {
             imgs.push(
-                <GalleryImage num={i} key={"img"+i}/>
+                <GalleryImage num={i} key={"img" + i} />
             );
         }
         return (<div id="gallery">
-            <Navigation/>
+            <Navigation />
             <section id="heading">
                 <a className="link" href="mailto:ericdudley@email.com" target="_blank">Contact Me</a>
-                <p>Looking for a photographer? I am an amateur photographer looking to get some experience in shooting events and portraits. Contact me if you want your event shot or are looking for some portraits.</p>
-                <a href="https://www.flickr.com/photos/ericdudley" className="link" target="_blank">see more at flickr <i className="fa fa-flickr"/></a>
+                <p>Looking for a photographer? I am an amateur photographer looking to get some experience in shooting events, nature, and portraits. Contact me if you want your event shot or are looking for portraits.</p>
+                <a href="https://www.flickr.com/photos/ericdudley" className="link" target="_blank">see more at flickr <i className="fa fa-flickr" /></a>
             </section>
             <section id="images">
                 {imgs}
             </section>
             <section id="bottom-buttons">
-            <Link to={`/`} className="link back-link">
-                <i className="fa fa-arrow-left"/> back
+                <Link to={`/`} className="link back-link">
+                    <i className="fa fa-arrow-left" /> back
             </Link>
             </section>
         </div>);
