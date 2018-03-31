@@ -35,7 +35,7 @@ deploy-image-prod:
   only: 
     - master
 
-deploy-image-staging:
+pages:
   stage: deploy
   image: alpine
   script:
