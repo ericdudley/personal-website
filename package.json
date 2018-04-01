@@ -176,7 +176,7 @@
       "no-unsafe-finally": 0,
       "no-unused-vars": 0,
       "semi": [
-        1,
+        0,
         "always"
       ],
       "no-trailing-spaces": 0,
@@ -226,7 +226,7 @@
       "react/prop-types": 1,
       "react/react-in-jsx-scope": 1,
       "import/extensions": 1,
-      "react/self-closing-comp": 1,
+      "react/self-closing-comp": 0,
       "react/sort-comp": 1
     },
     "globals": {}
