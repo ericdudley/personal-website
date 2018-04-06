@@ -3,6 +3,17 @@ $blue-color:  #16ffff;
 $main-font: Roboto;
 
 
+canvas
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  pointer-events: none;
+  z-index: -1;
+}
+
 #app
 {
   width: 100%;
