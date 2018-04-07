@@ -9,6 +9,46 @@ $base-duration: -0.3s;
   text-align: center;
 }
 
+#home {
+  .app-wrapper {
+    position: relative;
+    width: 144px;
+    height: 144px;
+    border-style: solid;
+    border-width: 4px;
+    border-color: #16ffff;
+    border-radius: 23px;
+    margin: 0 auto;
+    transition: transform 0.6s;
+    overflow: hidden;
+
+    .app-image{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('../images/me.jpg');
+      background-size: 144px;
+    }
+
+    .app-icon {
+      position: absolute;
+      top: 60px;
+      left: 72px;
+      transform: translate(-50%, -50%);
+      font-size: 100px;
+    }
+
+    .app-name {
+      position: absolute;
+      bottom: 10px;
+      left: 50%;
+      transform: translate(-50%, 0);      
+    }
+  }
+}
+
 #home section
 {
   margin: 40px auto;
@@ -112,15 +152,21 @@ $base-duration: -0.3s;
   $base-duration: 0.5s; 
   #home
   {
-    display: grid;
-    grid-template-columns: 1fr 4fr 1fr;
-    grid-template-rows: repeat(3, 1fr);
+    .app-wrapper:hover{
+      background-color: #16ffff;
+      border-color: black;
+      transform: scale(1.1);
+    }
   }
 
   #home section
   {
-    grid-column: 2;
-    grid-row: 2;
+    width: 600px;
+    margin: 45px auto;
+    display: grid;
+    grid-row-gap: 45px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
   }
 
   #home-links
