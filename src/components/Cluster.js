@@ -22,7 +22,7 @@ export default function clusterSketch(p) {
             dot.pos.x = p.random(-p.width, 0);
             dot.pos.y = p.random(-p.height, 0);
             dot.spd = p.random(4, 7);
-            dot.clr = p.color(22, 255, 255);
+            dot.clr = `rgb(22, 255, 255)`;
             dot.rad = 2;
 
             let angle = p.random(0, p.PI * 2);

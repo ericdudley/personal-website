@@ -304,7 +304,8 @@ class Stretch extends React.Component {
                 </p>
             </div>));
         return (<div id="stretch">
-            <h1>stretch</h1>
+            <div></div>
+            <Navigation />
             {progress_bar_wrapper}
             {status_wrapper}
             <div className="control-buttons-wrapper">
