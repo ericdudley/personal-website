@@ -140,6 +140,7 @@ class Stretch extends React.Component {
     }
 
     clicked1() {
+        console.log('test');
         if (!this.state.started) {
             let self = this;
             responsiveVoice.speak("starting session in " + this.INBETWEENSTRETCHESTIME + " seconds", "US English Female", {
@@ -268,7 +269,7 @@ class Stretch extends React.Component {
                     />
                 </div>
                 <div className="num-selector-wrapper">
-                    <span>interval(seconds)</span>
+                    <span>interval</span>
                     <NumberPicker
                         value={this.state.repInterval}
                         onChange={this.updaterepInterval.bind(this)}
@@ -303,7 +304,7 @@ class Stretch extends React.Component {
                     <span className="total-time-title">minutes</span>
                 </p>
             </div>));
-        return (<div id="stretch">
+        return (<div id="stretch" className={!this.state.started ? 'not-active' : ''}>
             <div></div>
             <Navigation />
             {progress_bar_wrapper}

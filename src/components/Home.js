@@ -51,7 +51,7 @@ class Home extends React.Component {
                 internal: true
             },
             {
-                name: 'Photography',
+                name: 'Photos',
                 url: '/photographer',
                 icon: 'fas fa-camera',
                 same_page: true,
@@ -59,7 +59,7 @@ class Home extends React.Component {
             },
             {
                 name: 'Tutor',
-                url: 'Tiny.cc/Tutor',
+                url: 'http://Tiny.cc/Tutor',
                 icon: 'fas fa-text-height',
                 same_page: false,
                 internal: false

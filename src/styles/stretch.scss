@@ -74,9 +74,9 @@ body{
 
     .num-selector-wrapper
     {
-        width: 150px;
-        height: 120px;
-        margin: 0 auto;
+        width: 100px;
+        height: 100px;
+        display: inline-block;
         position: relative;
 
         // Title
@@ -94,6 +94,7 @@ body{
         padding: 20px;
         margin-bottom: 80px;
         position: relative;
+        display: none;
 
         .search-wrapper{
             width: 200px;
@@ -150,12 +151,16 @@ body{
         }
     }
 
+    .back-link {
+        margin-bottom: 10px;
+    }
+
     @media screen and(min-width: 768px){        
         width: $width;
         margin: 0 auto;
         display: grid;
         grid-template-columns: 1fr 2fr 1fr;
-        grid-template-rows: 110px 160px 180px 100px 80px 120px 60px 60px;
+        grid-template-rows: 110px 160px 180px 100px 80px 0px 60px 60px;
         grid-template-areas: 
         ". title ."
         "progressbar progressbar progressbar"
@@ -165,6 +170,10 @@ body{
         ". control-num-selectors ."
         ". total-time ."
         ". back .";
+
+        &.not-active {
+            grid-template-rows: 110px 0px 0px 100px 80px 120px 60px 60px;            
+        }
 
         h1{
             grid-area: title;
@@ -196,6 +205,7 @@ body{
         .youtube-search-wrapper{
             grid-area: youtube-search;
             margin-bottom: 0px;
+            display: inline-block;
         }
 
         .total-time-wrapper{
