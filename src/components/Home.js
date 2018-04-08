@@ -101,23 +101,6 @@ class Home extends React.Component {
                 <section>
                     {apps_markup}
                 </section>
-                {/* <section>
-                <div id="home-links">
-                <a href="https://github.com/ericdudley" target="_blank" className="link link1">programmer</a>          
-                <Link to={`/photographer`} className="link link2">photographer</Link>
-                <Link to={`/tutor`} className="link link3">private tutor</Link>          
-                <Link to={`/stretch`} className="link link4">stretcher</Link>
-                </div>
-                    <h1>eric dudley</h1>
-                    <ul>
-                        <li className="home-icon"><a href="https://gitlab.com/ericdudley/personal-website" target="_blank"><i className="fa fa-5x fa-gitlab" /></a></li>
-                        <li className="home-icon"><a href="https://instagram.com/ericdudleyphotography" target="_blank"><i className="fa fa-5x fa-instagram" /></a></li>
-                    </ul>
-                    <ul>
-                        <li className="home-icon"><a href="https://www.linkedin.com/in/eric-dudley-894721106" target="_blank"><i className="fa fa-5x fa-linkedin" /></a></li>
-                        <li className="home-icon"><a href="mailto:ericdudley@email.com" target="_blank"><i className="fa fa-5x fa-envelope" /></a></li>
-                    </ul>
-                </section> */}
             </div>
         );
     }
