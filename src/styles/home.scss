@@ -1,138 +1,112 @@
-$base-duration: -0.3s;
-
-#home
-{
+#home {
   z-index: 0;
   position: relative;
   width: 100%;
   height: 100%;
   text-align: center;
-}
 
-#home section
-{
-  margin: 40px auto;
-}
-
-#home h1 /* Name */
-{
-  font-size: 3em;
-  margin-bottom: 10px;
-  color: #16FFFF;
-  animation: fadeDown $base-duration + 1.1s;
-  animation-fill-mode: forwards;
-}
-
-#home ul
-{
-  width: 100%;
-  display: flex;
-  list-style: none;
-  padding: 0;
-  justify-content: center;
-}
-
-#home .home-icon
-{
-  margin: 0 20px;
-  text-decoration: none;
-}
-
-#home .link
-{
-  display: inline-block;
-  animation-name: fadeDown;
-  animation-fill-mode: forwards;
-}
-
-.link1
-{
-  animation-duration: $base-duration + 1.5s;
-}
-
-.link2
-{
-  animation-duration: $base-duration + 1.7s;
-}
-.link3
-{
-  animation-duration: $base-duration + 1.9s;
-}
-.link4
-{
-  animation-duration: $base-duration + 2.1s;
-}
-
-#home-links
-{
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(2, 1fr);
-  grid-column-gap: 15px;
-  grid-row-gap: 15px;  
-  width: 85%;
-  margin: 0 auto;
-}
-
-#home .home-icon .fa
-{
-  color: #0077FF;
-  transition: color 0.3s, transform 0.3s;
-  animation-name: fadeDown;
-  animation-fill-mode: forwards;
-}
-
-#home .home-icon:hover .fa
-{
-  color: #16FFFF;
-}
-
-#home .fa-github
-{
-  animation-duration: $base-duration + 0.7s;
-}
-
-#home .fa-instagram
-{
-  animation-duration: $base-duration + 0.9s;
-}
-
-#home .fa-linkedin
-{
-  animation-duration: $base-duration + 0.3s;
-}
-
-#home .fa-envelope
-{
-  animation-duration: $base-duration + 0.5s;  
-}
-
-@media screen and(min-width: 768px){
-  $base-duration: 0.5s; 
-  #home
+  section
   {
+    width: 300px;
+    margin: 0 auto;
     display: grid;
-    grid-template-columns: 1fr 4fr 1fr;
-    grid-template-rows: repeat(3, 1fr);
+    grid-gap: 20px;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-rows: auto;
+
+    .app-grid-item{
+      width: 80px;
+      margin: 0 auto;
+      animation: fadeDown 1s;
+    }
   }
 
-  #home section
-  {
-    grid-column: 2;
-    grid-row: 2;
+  .app-wrapper {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border-style: solid;
+    border-width: 4px;
+    border-color: #16ffff;
+    border-radius: 23px;
+    margin: 0 auto;
+    transition: transform 0.6s;
+    overflow: hidden;
+
+    .app-image{
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: url('../images/me.jpg');
+      background-size: 80px;
+    }
+
+    .app-icon {
+      position: absolute;
+      top: 30px;
+      left: 40px;
+      transform: translate(-50%, -50%);
+      font-size: 50px;
+      color: #16ffff;
+    }
+
+    .app-name {
+      position: absolute;
+      bottom: 2px;
+      left: 50%;
+      transform: translate(-50%, 0); 
+      color: #16ffff;  
+      font-family: Helvetica, Arial, sans-serif;         
+    }
   }
 
-  #home-links
+@media screen and(min-width: 700px){
+  section
   {
-    display: block;
-    width: auto;
+    width: 600px;
+    margin: 45px auto;
+    grid-gap: 45px;
+
+    .app-grid-item{
+      width: 144px;
+    }
+  }
+
+  .app-wrapper {
+    width: 144px;
+    height: 144px;
+    border-style: solid;
+    border-width: 4px;
+    border-color: #16ffff;
+    border-radius: 23px;
+
+    &:hover{
+      background-color: #16ffff;
+      transform: scale(1.1);
+
+      .app-icon, .app-name{
+        color: black;
+      }
+    }
+
+    .app-image{
+      background-size: 144px;
+    }
+
+    .app-icon {
+      top: 60px;
+      left: 72px;
+      font-size: 100px;
+      color: #16ffff;
+    }
+
+    .app-name {
+      bottom: 10px;
+      color: #16ffff;  
+    }
+  }
+
   }
 }
-
-@media screen and(max-width: 568px){
-  #home-links
-  {
-    width: 95%;
-  }
-}  

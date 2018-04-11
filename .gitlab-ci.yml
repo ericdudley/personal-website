@@ -16,6 +16,7 @@ build-dist:
     - echo "Adding ci stamp..."
     - echo "<!-- Built and deployed with GitLab CI. Build $CI_JOB_ID for project $CI_PROJECT_NAME. Git url $CI_REPOSITORY_URL Commit $CI_COMMIT_SHA -->$(cat dist/index.html)" > dist/index.html
   artifacts:
+    expire_in: 1 week
     paths:
       - "dist"
   cache:
@@ -43,6 +44,6 @@ deploy-staging:
     - aws s3 sync ./dist s3://dev.ericdudley.com/
   environment:
     name: staging
-    url: http://ericdudley.gitlab.io/personal-website/
+    url: http://dev.ericdudley.com
   except: 
     - master

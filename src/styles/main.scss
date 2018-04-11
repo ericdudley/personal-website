@@ -3,6 +3,18 @@ $blue-color:  #16ffff;
 $main-font: Roboto;
 
 
+canvas
+{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw !important;
+  height: 100vh !important;
+  pointer-events: none;
+  z-index: -1;
+  opacity: 0.3;
+}
+
 #app
 {
   width: 100%;
@@ -22,7 +34,7 @@ html, body, #app-component
 body
 {
   font-family: $main-font;
-  background-color: $blue-color;
+  background-color: #000000;
 }
 
 html, body
@@ -125,17 +137,17 @@ html, body
     display: default;
   }
 
-  @keyframes fadeDown {
-    0% {opacity: 0; transform: scale(1) translate(0,-1000px) rotateZ(0deg);}
-    50% {transform: scale(1.0) translate(0, 0px) rotateZ(0deg);}
-    70% {transform: scale(1.1) translate(0, 9px) rotateZ(10deg);}
-    100% {opacity: 1; transform: scale(1) translate(0, 0) rotateZ(0deg);}
-  }
+  // @keyframes fadeDown {
+  //   0% {opacity: 0; transform: scale(1) translate(0,-1000px) rotateZ(0deg);}
+  //   50% {transform: scale(1.0) translate(0, 0px) rotateZ(0deg);}
+  //   70% {transform: scale(1.1) translate(0, 9px) rotateZ(10deg);}
+  //   100% {opacity: 1; transform: scale(1) translate(0, 0) rotateZ(0deg);}
+  // }
 
-  @keyframes fadeUp {
-    0% {opacity: 0; transform: scale(1) translate(0,1000px);}
-    30% {transform: scale(0.8) translate(0, 500px);}
-    70% {transform: scale(1.2) translate(0, -10px);}
-    100% {opacity: 1; transform: scale(1) translate(0, 0);}
-  }
+  // @keyframes fadeUp {
+  //   0% {opacity: 0; transform: scale(1) translate(0,1000px);}
+  //   30% {transform: scale(0.8) translate(0, 500px);}
+  //   70% {transform: scale(1.2) translate(0, -10px);}
+  //   100% {opacity: 1; transform: scale(1) translate(0, 0);}
+  // }
 }

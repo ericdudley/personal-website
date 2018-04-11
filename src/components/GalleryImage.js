@@ -1,11 +1,11 @@
 import React from "react";
 import PropTypes from 'prop-types';
-class GalleryImage extends React.Component{
+class GalleryImage extends React.Component {
 
-    static get propTypes() { 
-        return { 
+    static get propTypes() {
+        return {
             num: PropTypes.number
-        }; 
+        };
     }
 
     constructor(props) {
@@ -20,8 +20,8 @@ class GalleryImage extends React.Component{
         this.setState({ active: !currentState });
     }
 
-    render(){
-        return (<img className={"gimg"+this.props.num+(this.state.active ? ' selected': "")} src={this.props.num+".jpg"} onClick={this.toggleClass}/>);
+    render() {
+        return (<img className={"gimg" + this.props.num + (this.state.active ? ' selected' : "")} src={this.props.url} onClick={this.toggleClass} />);
     }
 }
 
