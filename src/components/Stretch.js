@@ -140,7 +140,6 @@ class Stretch extends React.Component {
     }
 
     clicked1() {
-        console.log('test');
         if (!this.state.started) {
             let self = this;
             responsiveVoice.speak("starting session in " + this.INBETWEENSTRETCHESTIME + " seconds", "US English Female", {
