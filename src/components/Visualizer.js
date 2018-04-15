@@ -23,10 +23,10 @@ const OPTIONS_DEFAULT = {
   font: ['12px', 'Roboto']
 };
 
-const Visualizer = React.createClass({
+class Visualizer {
 
-  
-  getInitialState () {
+
+  getInitialState() {
     return {
       playing: false,
       requestAnimationFrame: null,
@@ -45,43 +45,43 @@ const Visualizer = React.createClass({
       extensions: {},
       model: null
     };
-  },
-  
-  componentWillMount () {
+  }
+
+  componentWillMount() {
     this._setContext()
-    .then(() => {
-      this._setAnalyser();
-    }).then(() => {
-      this._setFrequencyData();
-    }).then(() => {
-      this._setRequestAnimationFrame();
-    }).catch((error) => {
-      this._onDisplayError(error);
-    });
-  },
-  
-  componentDidMount () {
-    this._extend()
-    .then(() => {
-      this._setBufferSourceNode();
-    }).then(() => {
-      this._setCanvasContext();
-    }).then(() => {
-      this._setCanvasStyles();
-    }).then(() => {
-      this._onResetTimer().then(() => {
-        this._onRender({
-          renderText: this.state.extensions.renderText,
-          renderTime: this.state.extensions.renderTime
-        });
-        this.state.options.autoplay && this._onResolvePlayState();
+      .then(() => {
+        this._setAnalyser();
+      }).then(() => {
+        this._setFrequencyData();
+      }).then(() => {
+        this._setRequestAnimationFrame();
+      }).catch((error) => {
+        this._onDisplayError(error);
       });
-    }).catch((error) => {
-      this._onDisplayError(error);
-    });
-  },
-  
-  componentWillReceiveProps (nextProps) {
+  }
+
+  componentDidMount() {
+    this._extend()
+      .then(() => {
+        this._setBufferSourceNode();
+      }).then(() => {
+        this._setCanvasContext();
+      }).then(() => {
+        this._setCanvasStyles();
+      }).then(() => {
+        this._onResetTimer().then(() => {
+          this._onRender({
+            renderText: this.state.extensions.renderText,
+            renderTime: this.state.extensions.renderTime
+          });
+          this.state.options.autoplay && this._onResolvePlayState();
+        });
+      }).catch((error) => {
+        this._onDisplayError(error);
+      });
+  }
+
+  componentWillReceiveProps(nextProps) {
     if (this.state.model !== nextProps.model) {
       this._onAudioStop().then(() => {
         this.setState({ model: nextProps.model }, () => {
@@ -89,17 +89,17 @@ const Visualizer = React.createClass({
         });
       });
     }
-  },
-  
-  componentWillUnmount () {
+  }
+
+  componentWillUnmount() {
     const { ctx } = this.state;
-    
+
     ctx.close();
-  },
-  
-  shouldComponentUpdate(nextProps, nextState){
+  }
+
+  shouldComponentUpdate(nextProps, nextState) {
     return false;
-  },
+  }
 
   /**
    * @description
@@ -109,10 +109,10 @@ const Visualizer = React.createClass({
    * @return {Function}
    * @private
    */
-  _onDisplayError (error) {
+  _onDisplayError(error) {
     return window.console.table(error);
-  },
-  
+  }
+
   /**
    * @description
    * Extend constructor options.
@@ -120,7 +120,7 @@ const Visualizer = React.createClass({
    * @return {Object}
    * @private
    */
-  _extend () {
+  _extend() {
     const options = Object.assign(OPTIONS_DEFAULT, this.props.options);
     const extensions = Object.assign({}, this.props.extensions || {
       renderStyle: this._onRenderStyleDefault,
@@ -137,7 +137,7 @@ const Visualizer = React.createClass({
         return resolve();
       });
     });
-  },
+  }
 
   /**
   * @description
@@ -146,7 +146,7 @@ const Visualizer = React.createClass({
   * @return {Object}
   * @private
   */
-  _setCanvasContext () {
+  _setCanvasContext() {
     const canvasCtx = this.refs.canvas.getContext('2d');
 
     return new Promise((resolve, reject) => {
@@ -154,7 +154,7 @@ const Visualizer = React.createClass({
         return resolve();
       });
     });
-  },
+  }
 
   /**
   * @description
@@ -163,7 +163,7 @@ const Visualizer = React.createClass({
   * @return {Object}
   * @private
   */
-  _setContext () {
+  _setContext() {
     const error = { message: 'Web Audio API is not supported.' };
 
     return new Promise((resolve, reject) => {
@@ -176,7 +176,7 @@ const Visualizer = React.createClass({
         return reject(error);
       }
     });
-  },
+  }
 
   /**
   * @description
@@ -185,7 +185,7 @@ const Visualizer = React.createClass({
   * @return {Object}
   * @private
   */
-  _setAnalyser () {
+  _setAnalyser() {
     const { ctx } = this.state;
 
     return new Promise((resolve, reject) => {
@@ -198,7 +198,7 @@ const Visualizer = React.createClass({
         return resolve();
       });
     });
-  },
+  }
 
   /**
   * @description
@@ -207,7 +207,7 @@ const Visualizer = React.createClass({
   * @return {Object}
   * @private
   */
-  _setFrequencyData () {
+  _setFrequencyData() {
     const { analyser } = this.state;
 
     return new Promise((resolve, reject) => {
@@ -217,7 +217,7 @@ const Visualizer = React.createClass({
         return resolve();
       });
     });
-  },
+  }
 
   /**
   * @description
@@ -226,7 +226,7 @@ const Visualizer = React.createClass({
   * @return {Object}
   * @private
   */
-  _setBufferSourceNode () {
+  _setBufferSourceNode() {
     const { ctx, analyser } = this.state;
 
     return new Promise((resolve, reject) => {
@@ -243,7 +243,7 @@ const Visualizer = React.createClass({
         return resolve();
       });
     });
-  },
+  }
 
   /**
   * @description
@@ -252,22 +252,22 @@ const Visualizer = React.createClass({
   * @return {Object}
   * @private
   */
-  _setRequestAnimationFrame () {
+  _setRequestAnimationFrame() {
     return new Promise((resolve, reject) => {
       const requestAnimationFrame = (() => {
         return window.requestAnimationFrame ||
-        window.webkitRequestAnimationFrame ||
-        window.mozRequestAnimationFrame ||
-        function (callback) {
-          window.setTimeout(callback, 1000 / 60);
-        };
+          window.webkitRequestAnimationFrame ||
+          window.mozRequestAnimationFrame ||
+          function (callback) {
+            window.setTimeout(callback, 1000 / 60);
+          };
       })();
 
       this.setState({ requestAnimationFrame }, () => {
         return resolve();
       });
     });
-  },
+  }
 
   /**
   * @description
@@ -276,7 +276,7 @@ const Visualizer = React.createClass({
   * @return {Object}
   * @private
   */
-  _setCanvasStyles () {
+  _setCanvasStyles() {
     const { canvasCtx } = this.state;
     const { barColor, shadowBlur, shadowColor, font } = this.state.options;
 
@@ -299,7 +299,7 @@ const Visualizer = React.createClass({
         return resolve();
       });
     });
-  },
+  }
 
   /**
   * @description
@@ -309,11 +309,11 @@ const Visualizer = React.createClass({
   * @return {Function<Object>}
   * @private
   */
-  _onChange (state) {
+  _onChange(state) {
     const { onChange } = this.props;
 
     return onChange && onChange.call(this, { status: state });
-  },
+  }
 
   /**
   * @description
@@ -322,7 +322,7 @@ const Visualizer = React.createClass({
   * @return {Function}
   * @private
   */
-  _onResolvePlayState () {
+  _onResolvePlayState() {
     const { ctx } = this.state;
 
     if (!this.state.playing) {
@@ -332,7 +332,7 @@ const Visualizer = React.createClass({
     } else {
       return this._onAudioPause();
     }
-  },
+  }
 
   /**
   * @description
@@ -341,7 +341,7 @@ const Visualizer = React.createClass({
   * @return {Object}
   * @private
   */
-  _onAudioLoad () {
+  _onAudioLoad() {
     const { ctx, canvasCtx, model } = this.state;
     const { canvas } = this.refs;
 
@@ -357,7 +357,7 @@ const Visualizer = React.createClass({
     });
 
     return this;
-  },
+  }
 
   /**
   * @description
@@ -366,7 +366,7 @@ const Visualizer = React.createClass({
   * @return {Object}
   * @private
   */
-  _httpGet () {
+  _httpGet() {
     const { model } = this.state;
 
     return new Promise((resolve, reject) => {
@@ -380,7 +380,7 @@ const Visualizer = React.createClass({
 
       req.send();
     });
-  },
+  }
 
   /**
   * @description
@@ -389,7 +389,7 @@ const Visualizer = React.createClass({
   * @return {Object}
   * @private
   */
-  _onAudioPause () {
+  _onAudioPause() {
     const { ctx } = this.state;
 
     this.setState({ playing: false }, () => {
@@ -399,7 +399,7 @@ const Visualizer = React.createClass({
     });
 
     return this;
-  },
+  }
 
   /**
   * @description
@@ -408,7 +408,7 @@ const Visualizer = React.createClass({
   * @return {Object}
   * @private
   */
-  _onAudioStop () {
+  _onAudioStop() {
     const { canvasCtx, ctx } = this.state;
     const { canvas } = this.refs;
 
@@ -432,7 +432,7 @@ const Visualizer = React.createClass({
         });
       });
     });
-  },
+  }
 
   /**
   * @description
@@ -441,7 +441,7 @@ const Visualizer = React.createClass({
   * @return {Object}
   * @private
   */
-  _onAudioPlay (buffer) {
+  _onAudioPlay(buffer) {
     const { ctx, sourceNode } = this.state;
 
     this.setState({ playing: true }, () => {
@@ -456,13 +456,13 @@ const Visualizer = React.createClass({
       sourceNode.start(0);
       this._onResetTimer().then(() => {
         this
-        ._onStartTimer()
-        ._onRenderFrame();
+          ._onStartTimer()
+          ._onRenderFrame();
       });
     });
 
     return this;
-  },
+  }
 
   /**
   * @description
@@ -471,7 +471,7 @@ const Visualizer = React.createClass({
   * @return {Object}
   * @private
   */
-  _onResetTimer () {
+  _onResetTimer() {
     return new Promise((resolve, reject) => {
       this.setState({
         duration: (new Date(0, 0)).getTime(),
@@ -481,7 +481,7 @@ const Visualizer = React.createClass({
         return resolve();
       });
     });
-  },
+  }
 
   /**
   * @description
@@ -490,7 +490,7 @@ const Visualizer = React.createClass({
   * @return {Object}
   * @private
   */
-  _onStartTimer () {
+  _onStartTimer() {
     const interval = setInterval(() => {
       if (this.state.playing) {
         let now = new Date(this.state.duration);
@@ -507,7 +507,7 @@ const Visualizer = React.createClass({
 
     this.setState({ interval });
     return this;
-  },
+  }
 
   /**
   * @description
@@ -516,7 +516,7 @@ const Visualizer = React.createClass({
   * @return {Object}
   * @private
   */
-  _onRenderFrame () {
+  _onRenderFrame() {
     const {
       analyser,
       frequencyData,
@@ -534,7 +534,7 @@ const Visualizer = React.createClass({
     }
 
     return this;
-  },
+  }
 
   /**
   * @description
@@ -545,16 +545,16 @@ const Visualizer = React.createClass({
   * @return {Function}
   * @private
   */
-  _onRender (extensions) {
+  _onRender(extensions) {
     const { canvasCtx } = this.state;
     const { canvas } = this.refs;
 
     canvasCtx.clearRect(0, 0, canvas.width, canvas.height);
     Object.keys(extensions).forEach((extension) => {
       return extensions[extension] &&
-      extensions[extension].call(this, this);
+        extensions[extension].call(this, this);
     });
-  },
+  }
 
   /**
   * @description
@@ -564,14 +564,14 @@ const Visualizer = React.createClass({
   * @return {Object}
   * @private
   */
-  _onRenderTimeDefault () {
+  _onRenderTimeDefault() {
     const { canvasCtx } = this.state;
     const { canvas } = this.refs;
 
     let time = `${this.state.minutes}:${this.state.seconds}`;
     canvasCtx.fillText(time, canvas.width / 2 + 10, canvas.height / 2 + 40);
     return this;
-  },
+  }
 
   /**
   * @description
@@ -581,7 +581,7 @@ const Visualizer = React.createClass({
   * @return {Object}
   * @private
   */
-  _onRenderTextDefault () {
+  _onRenderTextDefault() {
     const { canvasCtx } = this.state;
     const { canvas } = this.refs;
     const { model } = this.state;
@@ -600,7 +600,7 @@ const Visualizer = React.createClass({
     canvasCtx.font = font.join(' ');
 
     return this;
-  },
+  }
 
   /**
   * @description
@@ -610,7 +610,7 @@ const Visualizer = React.createClass({
   * @return {Object}
   * @private
   */
-  _onRenderStyleDefault () {
+  _onRenderStyleDefault() {
     const { frequencyData, canvasCtx } = this.state;
     const { canvas } = this.refs;
     const { barWidth, barHeight, barSpacing } = this.state.options;
@@ -628,7 +628,7 @@ const Visualizer = React.createClass({
 
     for (let i = 0; i < barNum; i++) {
       const amplitude = frequencyData[i * freqJump];
-      const theta = (i * 2 * Math.PI ) / maxBarNum;
+      const theta = (i * 2 * Math.PI) / maxBarNum;
       const delta = (3 * 45 - barWidth) * Math.PI / 180;
       const x = 0;
       const y = radius - (amplitude / 12 - barHeight);
@@ -643,31 +643,31 @@ const Visualizer = React.createClass({
     }
 
     return this;
-  },
+  }
 
   /**
   * @return {Object}
   * @public
   */
-  render () {
+  render() {
     const { model, width, height } = this.props;
     const classes = ['visualizer', this.props.className].join(' ');
 
     return (
       <div className={classes} onClick={this._onResolvePlayState}>
-        <audio className="visualizer__audio" src={model.path}/>
+        <audio className="visualizer__audio" src={model.path} />
 
         <div className="visualizer__canvas-wrapper">
           <canvas
             ref="canvas"
             className="visualizer__canvas"
             width={width}
-            height={height}/>
+            height={height} />
         </div>
       </div>
     );
   }
-});
+}
 
 Visualizer.PropTypes = {
   model: PropTypes.object.isRequired,

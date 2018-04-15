@@ -2,12 +2,6 @@ import React from "react";
 import PropTypes from 'prop-types';
 class GalleryImage extends React.Component {
 
-    static get propTypes() {
-        return {
-            num: PropTypes.number
-        };
-    }
-
     constructor(props) {
         super(props);
         this.toggleClass = this.toggleClass.bind(this);
@@ -24,5 +18,9 @@ class GalleryImage extends React.Component {
         return (<img className={"gimg" + this.props.num + (this.state.active ? ' selected' : "")} src={this.props.url} onClick={this.toggleClass} />);
     }
 }
+
+GalleryImage.PropTypes = {
+    num: PropTypes.number
+};
 
 export default GalleryImage;
