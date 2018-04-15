@@ -19,14 +19,19 @@
 
 @media screen and(min-width: 850px){
 	section {
-	iframe {
-		width: 850px;
-		display: inline;
-	}
+		background-image: url("../images/loading.gif");
+		background-position: top;
+		background-repeat: no-repeat;
+		background-size: 100px;
 
-	a {
-		display: none;
+		iframe {
+			width: 850px;
+			display: inline;
+		}
+
+		a {
+			display: none;
+		}
 	}
-}
 }	
 }
