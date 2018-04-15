@@ -24,8 +24,9 @@ class Resume extends React.Component {
                 <Navigation />
                 <section>
                     <iframe src={this.EMBED_LINK}
-                        seamless></iframe>
-
+                        seamless>
+                        <span className="btn">Loading...</span>
+                    </iframe>
                     <a className="btn" href={this.EXTERNAL_LINK}>
                         {this.redirecting ? 'Redirecting...' : 'View Resume'}</a>
                 </section>
