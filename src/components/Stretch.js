@@ -13,12 +13,6 @@ import PropTypes from 'prop-types';
 let responsiveVoice = new ResponsiveVoice().responsiveVoice;
 class Stretch extends React.Component {
 
-    static get propTypes() {
-        return {
-            cookies: PropTypes.any,
-        };
-    }
-
     constructor(props) {
         super(props);
         this.INBETWEENREPSTIME = 7;
@@ -332,4 +326,7 @@ class Stretch extends React.Component {
     }
 }
 
+Stretch.PropTypes = {
+    cookies: PropTypes.any
+};
 export default withCookies(Stretch);

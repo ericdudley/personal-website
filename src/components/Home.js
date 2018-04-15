@@ -14,11 +14,11 @@ class Home extends React.Component {
                 internal: false
             },
             {
-                name: 'GitLab',
-                url: 'https://gitlab.com/ericdudley/personal-website',
-                icon: 'fab fa-gitlab',
-                same_page: false,
-                internal: false
+                name: 'Resume',
+                url: '/resume',
+                icon: 'fas fa-user',
+                same_page: true,
+                internal: true
             },
             {
                 name: 'Email',
@@ -37,18 +37,11 @@ class Home extends React.Component {
                 image: '../images/me.jpg'
             },
             {
-                name: 'Flickr',
-                url: 'https://www.flickr.com/photos/ericdudley',
-                icon: 'fab fa-flickr',
+                name: 'GitLab',
+                url: 'https://gitlab.com/ericdudley/personal-website',
+                icon: 'fab fa-gitlab',
                 same_page: false,
                 internal: false
-            },
-            {
-                name: 'Stretch',
-                url: '/stretch',
-                icon: 'fas fa-child',
-                same_page: true,
-                internal: true
             },
             {
                 name: 'Photos',
@@ -58,9 +51,16 @@ class Home extends React.Component {
                 internal: true
             },
             {
-                name: 'Tutor',
-                url: 'http://Tiny.cc/Tutor',
-                icon: 'fas fa-text-height',
+                name: 'Stretch',
+                url: '/stretch',
+                icon: 'fas fa-child',
+                same_page: true,
+                internal: true
+            },
+            {
+                name: 'Flickr',
+                url: 'https://www.flickr.com/photos/ericdudley',
+                icon: 'fab fa-flickr',
                 same_page: false,
                 internal: false
             }
@@ -80,9 +80,9 @@ class Home extends React.Component {
                 </div>
             );
             apps_markup.push(
-                <div className="app-grid-item">
+                <div className="app-grid-item" key={`app` + i}>
                     {app.internal ?
-                        <Link to={app.url} key={`app` + i}>
+                        <Link to={app.url}>
                             {app_content}
                         </Link> :
                         <a href={app.url} target={app.same_page ? "_self" : "_blank"} key={`app` + i}>
