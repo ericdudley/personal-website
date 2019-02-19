@@ -32,18 +32,18 @@ deploy-prod:
   environment:
     name: production
     url: http://www.ericdudley.com
-  only: 
+  only:
     - master
 
 deploy-staging:
   stage: deploy
   image: python
   script:
-    - pip install awscli  
+    - pip install awscli
     - aws s3 rm s3://dev.ericdudley.com --recursive
     - aws s3 sync ./dist s3://dev.ericdudley.com/
   environment:
     name: staging
     url: http://dev.ericdudley.com
-  except: 
+  except:
     - master
