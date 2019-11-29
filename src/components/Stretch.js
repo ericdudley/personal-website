@@ -290,7 +290,7 @@ class Stretch extends React.Component {
             {num_selectors}
             {total_time}
             <div className="live-clock">
-                <Clock format={'hh:mm:ss A'} ticking={true} timezone={'US/Pacific'} />
+                <Clock format={'hh:mm:ss A'} ticking={true} />
             </div>
             <Link to={`/`} className="link back-link">
                 <i className="fa fa-arrow-left" /> back
