@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router";
 import Navigation from "./Navigation";
+import Clock from 'react-live-clock';
 import NumberPicker from "react-number-picker";
 import "../styles/stretch.scss";
 import "../styles/picker.scss";
@@ -27,8 +28,7 @@ class Stretch extends React.Component {
             currLeg: "R",
             started: false,
             paused: false,
-            pauseTime: this.INBETWEENSTRETCHESTIME,
-            search_query: ""
+            pauseTime: this.INBETWEENSTRETCHESTIME
         };
 
         this.encouragements = [
@@ -38,12 +38,13 @@ class Stretch extends React.Component {
             "you're doing great!",
             "hashtag best stretcher",
             "hashtag stretcher of the year",
-            "you'll miss this",
-            "this too shall pass",
             "don't forget to smile",
             "you look great",
             "you can do it",
-            "never give up"
+            "never give up",
+            "you should post this on facebook",
+            "stay focused",
+            "stretch it out"
         ];
     }
 
@@ -55,7 +56,6 @@ class Stretch extends React.Component {
             numStretches: parseInt(cookies.get('numStretches')) || 3, // 3
             numReps: parseInt(cookies.get('numReps')) || 5, // 5
             repInterval: parseInt(cookies.get('repInterval')) || 30, // 30
-            search_query: cookies.get('search_query')
         };
     }
 
@@ -174,27 +174,6 @@ class Stretch extends React.Component {
         }
     }
 
-    search() {
-        let url_search_query = this.state.search_query.split().join("+");
-        window.open(encodeURI("https://www.youtube.com/results?search_query=" + url_search_query), "_blank");
-    }
-
-    searchPress(e) {
-        if (e.key === 'Enter') {
-            this.search();
-        }
-    }
-
-    updateSearch({ target }) {
-        const { cookies } = this.props;
-        cookies.set('search_query', target.value, {
-            maxAge: 31536000
-        });
-        this.setState({
-            search_query: target.value
-        });
-    }
-
 
     updatenumStretches(new_value) {
         const { cookies } = this.props;
@@ -308,17 +287,11 @@ class Stretch extends React.Component {
                 }</a>
                 {button2}
             </div>
-            <div className="youtube-search-wrapper">
-                <div className="search-wrapper">
-                    <input type="text" placeholder="Music search..."
-                        value={this.state.search_query}
-                        onChange={this.updateSearch.bind(this)}
-                        onKeyPress={this.searchPress.bind(this)} />
-                    <span className="icon" onClick={this.search.bind(this)}><i className="fa fa-search"></i></span>
-                </div>
-            </div>
             {num_selectors}
             {total_time}
+            <div className="live-clock">
+                <Clock format={'hh:mm:ss A'} ticking={true} timezone={'US/Pacific'} />
+            </div>
             <Link to={`/`} className="link back-link">
                 <i className="fa fa-arrow-left" /> back
             </Link>
