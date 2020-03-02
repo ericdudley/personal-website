@@ -5,16 +5,38 @@ import Clock from "react-live-clock";
 import NumberPicker from "react-number-picker";
 import "../styles/stretch.scss";
 import "../styles/picker.scss";
-import ResponsiveVoice from "./responsivevoice";
-import PropTypes from "prop-types";
 import localStorage from "local-storage";
 
-let responsiveVoice = new ResponsiveVoice().responsiveVoice;
+const synth = window.speechSynthesis;
+
+function speak(text, options) {
+  if (!text || !synth) {
+    return;
+  }
+  const instance = new SpeechSynthesisUtterance(text);
+  if (options && options.onstart) {
+    instance.addEventListener("start", options.onstart);
+  }
+  if (options && options.onend) {
+    instance.addEventListener("end", options.onend);
+  }
+
+  const voice = synth.getVoices().find(v => v.name === "Google US English");
+
+  if (voice) {
+    instance.voice = voice;
+  }
+
+  synth.speak(instance);
+}
+
 class Stretch extends React.Component {
   constructor(props) {
     super(props);
     this.INBETWEENREPSTIME = 7;
     this.INBETWEENSTRETCHESTIME = 15;
+    this.INCREMENTTIME = 1000;
+    this.lastIncrementTime = 0;
     this.state = {
       numStretches: 3, // 3
       numReps: 5, // 5
@@ -46,7 +68,6 @@ class Stretch extends React.Component {
   }
 
   componentDidMount() {
-    responsiveVoice.setDefaultVoice("US English Female");
     this.reset();
     this.state = {
       numStretches: parseInt(localStorage.get("numStretches")) || 3, // 3
@@ -68,98 +89,98 @@ class Stretch extends React.Component {
   }
 
   increment() {
-    if (!this.state.started) {
-      responsiveVoice.speak("session stopped");
-      this.reset();
-      return;
-    } else if (!this.state.paused) {
-      let nextTime = this.state.currTime + 1;
-      let nextStretch = this.state.currStretch;
-      let nextRep = this.state.currRep;
-      let nextLeg = this.state.currLeg;
-      let nextPauseTime = this.state.pauseTime;
-      let speech = "";
-      if (nextTime == 0) {
-        speech = "begin stretching";
-        if (nextRep == this.state.numReps && nextLeg == "L") {
-          speech += "; this is the last one";
-        }
-      }
-      if (nextTime >= this.state.repInterval) {
-        nextTime = -this.INBETWEENREPSTIME;
-        nextPauseTime = this.INBETWEENREPSTIME;
-        nextLeg = nextLeg === "L" ? "R" : "L";
-        if (nextLeg === "R") {
-          speech = "stop; rep completed";
-          nextRep++;
-        } else {
-          speech = "stop; switch sides";
-        }
-        if (nextLeg === "R" && nextRep > this.state.numReps) {
-          nextRep = 1;
-          nextStretch++;
-          if (nextStretch > this.state.numStretches) {
-            responsiveVoice.speak("session completed");
-            this.reset();
-            return;
-          } else {
-            nextTime = -this.INBETWEENSTRETCHESTIME;
-            nextPauseTime = this.INBETWEENSTRETCHESTIME;
-            speech =
-              "stop; stretch number" +
-              this.state.currStretch.toString() +
-              "completed; beginning stretch " +
-              nextStretch.toString() +
-              " in " +
-              this.INBETWEENSTRETCHESTIME.toString() +
-              " seconds";
+    const now = performance.now();
+    if (now - this.lastIncrementTime > this.INCREMENTTIME) {
+      this.lastIncrementTime = now;
+      if (!this.state.started) {
+        speak("session stopped");
+        this.reset();
+        return;
+      } else if (!this.state.paused) {
+        let nextTime = this.state.currTime + 1;
+        let nextStretch = this.state.currStretch;
+        let nextRep = this.state.currRep;
+        let nextLeg = this.state.currLeg;
+        let nextPauseTime = this.state.pauseTime;
+        let speech = "";
+        if (nextTime == 0) {
+          speech = "begin stretching";
+          if (nextRep == this.state.numReps && nextLeg == "L") {
+            speech += "; this is the last one";
           }
         }
-      }
-      if (speech !== "") {
-        if (Math.random() < 0.05) {
-          speech +=
-            "; " +
-            this.encouragements[
-              Math.floor(Math.random() * this.encouragements.length)
-            ];
+        if (nextTime >= this.state.repInterval) {
+          nextTime = -this.INBETWEENREPSTIME;
+          nextPauseTime = this.INBETWEENREPSTIME;
+          nextLeg = nextLeg === "L" ? "R" : "L";
+          if (nextLeg === "R") {
+            speech = "stop; rep completed";
+            nextRep++;
+          } else {
+            speech = "stop; switch sides";
+          }
+          if (nextLeg === "R" && nextRep > this.state.numReps) {
+            nextRep = 1;
+            nextStretch++;
+            if (nextStretch > this.state.numStretches) {
+              speak("session completed");
+              this.reset();
+              return;
+            } else {
+              nextTime = -this.INBETWEENSTRETCHESTIME;
+              nextPauseTime = this.INBETWEENSTRETCHESTIME;
+              speech =
+                "stop; stretch number" +
+                this.state.currStretch.toString() +
+                "completed; beginning stretch " +
+                nextStretch.toString() +
+                " in " +
+                this.INBETWEENSTRETCHESTIME.toString() +
+                " seconds";
+            }
+          }
         }
-        responsiveVoice.speak(speech);
+        if (speech !== "") {
+          if (Math.random() < 0.05) {
+            speech +=
+              "; " +
+              this.encouragements[
+                Math.floor(Math.random() * this.encouragements.length)
+              ];
+          }
+          speak(speech);
+        }
+        this.setState({
+          currStretch: nextStretch,
+          currRep: nextRep,
+          currTime: nextTime,
+          currLeg: nextLeg,
+          pauseTime: nextPauseTime
+        });
       }
-      this.setState({
-        currStretch: nextStretch,
-        currRep: nextRep,
-        currTime: nextTime,
-        currLeg: nextLeg,
-        pauseTime: nextPauseTime
-      });
     }
-    setTimeout(this.increment.bind(this), 1000);
+    requestAnimationFrame(this.increment.bind(this));
   }
 
   clicked1() {
     if (!this.state.started) {
       let self = this;
-      responsiveVoice.speak(
-        "starting session in " + this.INBETWEENSTRETCHESTIME + " seconds",
-        "US English Female",
-        {
-          onstart: function() {
-            self.setState({
-              started: true,
-              paused: false
-            });
-          },
-          onend: function() {
-            self.setState(
-              {
-                currTime: -self.INBETWEENSTRETCHESTIME
-              },
-              self.increment.bind(self)
-            );
-          }
+      speak("starting session in " + this.INBETWEENSTRETCHESTIME + " seconds", {
+        onstart: function() {
+          self.setState({
+            started: true,
+            paused: false
+          });
+        },
+        onend: function() {
+          self.setState(
+            {
+              currTime: -self.INBETWEENSTRETCHESTIME
+            },
+            self.increment.bind(self)
+          );
         }
-      );
+      });
     } else {
       this.setState({
         started: false
@@ -172,12 +193,12 @@ class Stretch extends React.Component {
       this.reset();
     } else {
       if (this.state.paused) {
-        responsiveVoice.speak("session resumed");
+        speak("session resumed");
         this.setState({
           paused: false
         });
       } else {
-        responsiveVoice.speak("session paused");
+        speak("session paused");
         this.setState({
           paused: true
         });
