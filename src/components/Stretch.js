@@ -107,7 +107,7 @@ class Stretch extends React.Component {
         let nextPauseTime = this.state.pauseTime;
         let speech = "";
         if (nextTime == 0) {
-          speech = "  ";
+          speech = "begin stretching";
           if (nextRep == this.state.numReps && nextLeg == "L") {
             speech += "; this is the last one";
           }
