@@ -21,7 +21,7 @@ function speak(text, options) {
     instance.addEventListener("end", options.onend);
   }
 
-  const voice = synth.getVoices().find(v => v.name === "Google US English");
+  const voice = synth.getVoices().find((v) => v.name === "Google US English");
 
   if (voice) {
     instance.voice = voice;
@@ -47,7 +47,7 @@ class Stretch extends React.Component {
       currLeg: "R",
       started: false,
       paused: false,
-      pauseTime: this.INBETWEENSTRETCHESTIME
+      pauseTime: this.INBETWEENSTRETCHESTIME,
     };
 
     this.encouragements = [
@@ -63,7 +63,10 @@ class Stretch extends React.Component {
       "never give up",
       "you should post this on facebook",
       "stay focused",
-      "stretch it out"
+      "stretch it out",
+      "fx dark christmas is my favorite movie",
+      "don't forget to wet the horse",
+      "play Dizzy Gillespie",
     ];
   }
 
@@ -72,7 +75,7 @@ class Stretch extends React.Component {
     this.state = {
       numStretches: parseInt(localStorage.get("numStretches")) || 3, // 3
       numReps: parseInt(localStorage.get("numReps")) || 5, // 5
-      repInterval: parseInt(localStorage.get("repInterval")) || 30 // 30
+      repInterval: parseInt(localStorage.get("repInterval")) || 30, // 30
     };
   }
 
@@ -84,7 +87,7 @@ class Stretch extends React.Component {
       currLeg: "R",
       started: false,
       paused: false,
-      pauseTime: this.INBETWEENSTRETCHESTIME
+      pauseTime: this.INBETWEENSTRETCHESTIME,
     });
   }
 
@@ -104,7 +107,7 @@ class Stretch extends React.Component {
         let nextPauseTime = this.state.pauseTime;
         let speech = "";
         if (nextTime == 0) {
-          speech = "begin stretching";
+          speech = "  ";
           if (nextRep == this.state.numReps && nextLeg == "L") {
             speech += "; this is the last one";
           }
@@ -114,7 +117,7 @@ class Stretch extends React.Component {
           nextPauseTime = this.INBETWEENREPSTIME;
           nextLeg = nextLeg === "L" ? "R" : "L";
           if (nextLeg === "R") {
-            speech = "stop; rep completed";
+            speech = "stop; rep number " + this.state.currRep + " completed";
             nextRep++;
           } else {
             speech = "stop; switch sides";
@@ -155,7 +158,7 @@ class Stretch extends React.Component {
           currRep: nextRep,
           currTime: nextTime,
           currLeg: nextLeg,
-          pauseTime: nextPauseTime
+          pauseTime: nextPauseTime,
         });
       }
     }
@@ -166,24 +169,24 @@ class Stretch extends React.Component {
     if (!this.state.started) {
       let self = this;
       speak("starting session in " + this.INBETWEENSTRETCHESTIME + " seconds", {
-        onstart: function() {
+        onstart: function () {
           self.setState({
             started: true,
-            paused: false
+            paused: false,
           });
         },
-        onend: function() {
+        onend: function () {
           self.setState(
             {
-              currTime: -self.INBETWEENSTRETCHESTIME
+              currTime: -self.INBETWEENSTRETCHESTIME,
             },
             self.increment.bind(self)
           );
-        }
+        },
       });
     } else {
       this.setState({
-        started: false
+        started: false,
       });
     }
   }
@@ -195,12 +198,12 @@ class Stretch extends React.Component {
       if (this.state.paused) {
         speak("session resumed");
         this.setState({
-          paused: false
+          paused: false,
         });
       } else {
         speak("session paused");
         this.setState({
-          paused: true
+          paused: true,
         });
       }
     }
@@ -240,7 +243,7 @@ class Stretch extends React.Component {
                 (this.state.currTime < 0
                   ? this.state.pauseTime
                   : this.state.repInterval) +
-              "%"
+              "%",
           }}
         >
           <span className="progressbar-time">
@@ -300,7 +303,7 @@ class Stretch extends React.Component {
       </div>
     ) : null;
 
-    let calculate_seconds = function(stretches, reps) {
+    let calculate_seconds = function (stretches, reps) {
       return (
         stretches * this.INBETWEENSTRETCHESTIME +
         stretches * (reps * 2 - 1) * this.INBETWEENREPSTIME +
