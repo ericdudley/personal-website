@@ -22,7 +22,7 @@ class Home extends React.Component {
       },
       {
         name: "Email",
-        url: "mailto:ericdudley@email.com",
+        url: "mailto:contact@ericdudley.com",
         icon: "fas fa-envelope",
         same_page: false,
         internal: false
