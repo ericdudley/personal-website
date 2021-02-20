@@ -6,28 +6,29 @@ import NumberPicker from "react-number-picker";
 import "../styles/stretch.scss";
 import "../styles/picker.scss";
 import localStorage from "local-storage";
+import meSpeak from "mespeak";
+import good_job_01 from "../sounds/good_job_01.mp3";
+import good_job_02 from "../sounds/good_job_02.mp3";
+import cheer from "../sounds/cheer.mp3";
+import cable from "../sounds/cable.mp3";
 
-const synth = window.speechSynthesis;
+meSpeak.loadVoice(require("mespeak/voices/en/en-us.json"));
+meSpeak.loadConfig(require("mespeak/src/mespeak_config.json"));
 
 function speak(text, options) {
-  if (!text || !synth) {
+  if (!meSpeak.isConfigLoaded()) {
+    console.error("meSpeak not configured");
     return;
   }
-  const instance = new SpeechSynthesisUtterance(text);
-  if (options && options.onstart) {
-    instance.addEventListener("start", options.onstart);
+  if (!meSpeak.isVoiceLoaded("en/en-us")) {
+    console.error("meSpeak voice not loaded");
+    return;
   }
-  if (options && options.onend) {
-    instance.addEventListener("end", options.onend);
-  }
-
-  const voice = synth.getVoices().find((v) => v.name === "Google US English");
-
-  if (voice) {
-    instance.voice = voice;
-  }
-
-  synth.speak(instance);
+  meSpeak.speak(
+    text,
+    undefined,
+    options && options.onend ? options.onend : undefined
+  );
 }
 
 class Stretch extends React.Component {
@@ -61,12 +62,18 @@ class Stretch extends React.Component {
       "you look great",
       "you can do it",
       "never give up",
-      "you should post this on facebook",
       "stay focused",
       "stretch it out",
       "fx dark christmas is my favorite movie",
-      "don't forget to wet the horse",
       "play Dizzy Gillespie",
+      "you don't need two damn monitors",
+    ];
+
+    this.audioIds = [
+      ["good_job_01", 0.75],
+      ["good_job_02", 0.8],
+      ["cheer", 0.5],
+      ["cable", 0.75],
     ];
   }
 
@@ -145,11 +152,22 @@ class Stretch extends React.Component {
         }
         if (speech !== "") {
           if (Math.random() < 0.05) {
-            speech +=
-              "; " +
-              this.encouragements[
-                Math.floor(Math.random() * this.encouragements.length)
+            if (Math.random() > 0.6) {
+              speech +=
+                "; " +
+                this.encouragements[
+                  Math.floor(Math.random() * this.encouragements.length)
+                ];
+            } else {
+              const chosen = this.audioIds[
+                Math.floor(Math.random() * this.audioIds.length)
               ];
+              const audioElement = document.getElementById(chosen[0]);
+              if (audioElement) {
+                audioElement.volume = chosen[1];
+                audioElement.play();
+              }
+            }
           }
           speak(speech);
         }
@@ -168,13 +186,11 @@ class Stretch extends React.Component {
   clicked1() {
     if (!this.state.started) {
       let self = this;
+      self.setState({
+        started: true,
+        paused: false,
+      });
       speak("starting session in " + this.INBETWEENSTRETCHESTIME + " seconds", {
-        onstart: function () {
-          self.setState({
-            started: true,
-            paused: false,
-          });
-        },
         onend: function () {
           self.setState(
             {
@@ -339,6 +355,10 @@ class Stretch extends React.Component {
     );
     return (
       <div id="stretch" className={!this.state.started ? "not-active" : ""}>
+        <audio id="good_job_01" src={good_job_01} />
+        <audio id="good_job_02" src={good_job_02} />
+        <audio id="cheer" src={cheer} />
+        <audio id="cable" src={cable} />
         <div></div>
         <Navigation />
         {progress_bar_wrapper}
