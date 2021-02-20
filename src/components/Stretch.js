@@ -66,7 +66,7 @@ class Stretch extends React.Component {
       "stretch it out",
       "fx dark christmas is my favorite movie",
       "play Dizzy Gillespie",
-      "you don't need two damn monitors",
+      "you don't need two monitors",
     ];
 
     this.audioIds = [
